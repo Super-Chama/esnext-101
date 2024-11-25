@@ -50,7 +50,7 @@ const http = {
  */
 
 export const exercise01 = () => {
-  return new Promise(() => {
+  return new Promise((resolve) => {
     http.getVacancies().then((response) =>
       resolve(
         response.data.data.map((vacancy) => ({
