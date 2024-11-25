@@ -50,5 +50,14 @@ const http = {
  */
 
 export const exercise01 = () => {
-  // your code here
+  return new Promise(() => {
+    http.getVacancies().then((response) =>
+      resolve(
+        response.data.data.map((vacancy) => ({
+          id: vacancy.vacancyId.toString(),
+          label: vacancy.name,
+        }))
+      )
+    );
+  });
 };
