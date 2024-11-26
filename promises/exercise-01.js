@@ -43,12 +43,14 @@ const http = {
     }),
 };
 
+
 /**
  * Write a function to return Prmoise that will resolve vacancies
  * formatted for using in dropdown component.
  * Format should be in { id: "vacancyId", label: "vacancyName" }
  */
-
 export const exercise01 = () => {
-  // your code here
+  return http.getVacancies().then((data) => {
+    return data.data.data.map(vacancy => ({id: vacancy.vacancyId.toString(), label: vacancy.name}));
+  });
 };
