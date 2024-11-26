@@ -47,6 +47,7 @@ const http = {
     }),
 };
 
+
 /**
  * Write a function to return Prmoise that will resolve users with role
  * Format should be in
@@ -60,7 +61,28 @@ const http = {
  * }
  * use promise chaining or promise all
  */
-
 export const exercise02 = () => {
-  // your code here
+  return Promise.all([
+    http.getRoles(),
+    http.getUsers(),
+  ]).then(results => {
+    const roles = results[0].data.data;
+    const users = results[1].data.data;
+
+    const roleMap = new Map();
+    roles.forEach(role => {
+      roleMap.set(role.id, role.name);
+    });
+
+    return users.map(user => ({
+      id: user.userId.toString(),
+      firstName: user.firstName,
+      lastName: user.lastName,
+
+      role: {
+        id: user.roleId.toString(),
+        name: roleMap.get(user.roleId),
+      }
+    }));
+  });
 };
