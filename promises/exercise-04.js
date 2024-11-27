@@ -27,9 +27,8 @@ export const exercise04 = () => {
   const fs = new FileSystem();
   return new Promise((resolve, reject) => {
     return fs.readFile("./users.txt", (content) => {
-      const parsedContent = JSON.parse(content); // Parse JSON string into an object
+      const parsedContent = JSON.parse(content);
       resolve(parsedContent);
     });
   });
 };
-
