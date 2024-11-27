@@ -63,4 +63,19 @@ const http = {
 
 export const exercise02 = () => {
   // your code here
+  return Promise.all([http.getRoles(), http.getUsers()]).then(([roles, users]) => {
+    return users.data.data.map((user) => {
+      const role = roles.data.data.find((role) => role.id === user.roleId);
+      return {
+        id: user.userId.toString(),
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: {
+           id: role.id.toString(),
+           name: role.name,
+         },
+       };
+     });
+   });
+
 };
