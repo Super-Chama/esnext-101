@@ -7,3 +7,4 @@ import { exercise05 } from "./promises/exercise-05.js";
 console.log(await exercise01());
 console.log(await exercise02());
 console.log(await exercise03());
+console.log(await exercise04());
