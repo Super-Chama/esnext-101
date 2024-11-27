@@ -64,4 +64,29 @@ const http = {
  * use promise chaining
  */
 
-export const exercise03 = () => {};
+export const exercise03 = () => {
+  // your code here
+  return http
+    .getTimeSheetPeriods()
+    .then((response) => {
+      const activePeriod = response.data.data.filter((period) => period.active);
+      return { activePeriod };
+    })
+    .then(({ activePeriod }) => {
+      return Promise.all(
+        activePeriod.map((period) =>
+          http.getTimesheetRecords(period.id).then((response) =>
+            response.data.data.map((record) => {
+              return {
+                id: record.id.toString(),
+                periodId: record.periodId.toString(),
+                project: record.project,
+                value: record.value,
+              };
+            })
+          )
+        )
+      );
+    })
+    .then((records) => records.flat());
+};

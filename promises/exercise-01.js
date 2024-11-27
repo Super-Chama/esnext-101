@@ -50,5 +50,13 @@ const http = {
  */
 
 export const exercise01 = () => {
-  // your code here
+  return http.getVacancies().then((response) => {
+    return response.data.data.map((vacancy) => {
+      return {
+        id: vacancy.vacancyId.toString(),
+        label: vacancy.name,
+      };
+    });
+  });
+       
 };

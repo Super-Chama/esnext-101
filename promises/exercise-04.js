@@ -11,14 +11,24 @@ class FileSystem {
   }
 }
 
-/**
- * Re-write the following with promise
- */
+// /**
+//  * Re-write the following with promise
+//  */
+// export const exercise04 = () => {
+//   const fs = new FileSystem();
+//   const readContent = (content) => {
+//     console.log(content);
+//   };
+
+//   fs.readFile("./users.txt", readContent);
+// };
+
 export const exercise04 = () => {
   const fs = new FileSystem();
-  const readContent = (content) => {
-    console.log(content);
-  };
-
-  fs.readFile("./users.txt", readContent);
+  return new Promise((resolve, reject) => {
+    return fs.readFile("./users.txt", (content) => {
+      const parsedContent = JSON.parse(content);
+      resolve(parsedContent);
+    });
+  });
 };
