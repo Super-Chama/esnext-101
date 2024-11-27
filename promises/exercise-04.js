@@ -16,9 +16,10 @@ class FileSystem {
  */
 export const exercise04 = () => {
   const fs = new FileSystem();
-  const readContent = (content) => {
-    console.log(content);
-  };
 
-  fs.readFile("./users.txt", readContent);
+  return new Promise((resolve, reject) => {
+    fs.readFile("./users.txt", (content) => {
+      resolve(JSON.parse(content));
+    });
+  });
 };

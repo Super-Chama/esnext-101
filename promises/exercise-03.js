@@ -52,6 +52,7 @@ const http = {
   },
 };
 
+
 /**
  * Write a function to return Prmoise that will resolve timesheet records
  * by active timesheet period. Format should be in
@@ -63,5 +64,21 @@ const http = {
  * }
  * use promise chaining
  */
+export const exercise03 = () => {
+  return http.getTimeSheetPeriods()
+    .then(timeSheetPeriodData => {
+      const activeTimePeriods = timeSheetPeriodData.data.data
+        .filter(period => period.active);
 
-export const exercise03 = () => {};
+      // There's only a single active time period.
+      const activeTimePeriod = activeTimePeriods.shift();
+
+      return http.getTimesheetRecords(activeTimePeriod.id).then(timesheetRecordData => {
+        return timesheetRecordData.data.data.map(timesheetRecord => ({
+          ...timesheetRecord,
+          id: timesheetRecord.id.toString(),
+          periodId: timesheetRecord.periodId.toString(),
+        }));
+      });
+    });
+};
