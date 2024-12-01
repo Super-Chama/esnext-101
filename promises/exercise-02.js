@@ -5,11 +5,11 @@ const http = {
         data: [
           {
             id: 1,
-            name: "Administrator",
+            name: 'Administrator',
           },
           {
             id: 2,
-            name: "ESS User",
+            name: 'ESS User',
           },
         ],
         meta: {
@@ -24,20 +24,20 @@ const http = {
           {
             userId: 1,
             roleId: 1,
-            firstName: "John",
-            lastName: "Doe",
+            firstName: 'John',
+            lastName: 'Doe',
           },
           {
             userId: 2,
             roleId: 1,
-            firstName: "Sam",
-            lastName: "Jackson",
+            firstName: 'Sam',
+            lastName: 'Jackson',
           },
           {
             userId: 3,
             roleId: 2,
-            firstName: "Max",
-            lastName: "Payne",
+            firstName: 'Max',
+            lastName: 'Payne',
           },
         ],
         meta: {
@@ -62,5 +62,33 @@ const http = {
  */
 
 export const exercise02 = () => {
-  // your code here
+  return new Promise((resolve, reject) => {
+    Promise.all([http.getUsers(), http.getRoles()])
+      .then(([usersResponse, rolesResponse]) => {
+        const users = usersResponse.data.data;
+        const roles = rolesResponse.data.data;
+
+        let formattedData = [];
+
+        for (let i = 0; i < users.length; i++) {
+          for (let j = 0; j < roles.length; j++) {
+            if (users[i].roleId === roles[j].id) {
+              formattedData.push({
+                id: String(users[i].userId),
+                firstName: users[i].firstName,
+                lastName: users[i].lastName,
+                role: {
+                  id: String(roles[j].id),
+                  name: roles[j].name,
+                },
+              });
+              break;
+            }
+          }
+        }
+
+        resolve(formattedData);
+      })
+      .catch((error) => reject(error));
+  });
 };
